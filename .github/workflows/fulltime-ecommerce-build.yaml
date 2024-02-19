@@ -1,0 +1,56 @@
+# To better understand this file read this:
+# https://docs.ionos.space/docs/github-actions-customization/
+
+name: "Deploy Now: Execute Build"
+
+on:
+  workflow_call:
+    inputs:
+      site-url:
+        required: true
+        type: string
+      branch-id:
+        required: true
+        type: string
+
+env:
+  DEPLOYMENT_FOLDER: ./
+
+jobs:
+# Please do not rename this job
+  build-project:
+    name: build fulltime-ecommerce
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: v18.x
+
+      - name: Build Node assets
+        env:
+          CI: true
+          NEXT_PUBLIC_BUILDER_API_KEY: 6e3ca42686fd4e17a8c29dc7e0b5666b
+          NEXT_PUBLIC_RESEND_API_KEY: re_UQbBXPXL_Q5omn2ayKWkV3mMu2xngEz5f
+          SITE_URL: ${{ inputs.site-url }}
+        run: |
+          npm ci
+          npm run build
+
+# Please do not touch the following action
+      - name: Store deployment content
+        uses: ionos-deploy-now/artifact-action@v1
+        with:
+          api-key: ${{ secrets.IONOS_API_KEY }}
+          service-host: api-eu.ionos.space
+          project-id: 225e8409-3ac8-4f5d-ae4f-5fba54895919
+          branch-id: ${{ inputs.branch-id }}
+          version: ${{ github.sha }}
+          folder: ${{ env.DEPLOYMENT_FOLDER }}
+          config-file: .deploy-now/fulltime-ecommerce/config.yaml
+          action: upload
