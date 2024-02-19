@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { builder } from "@builder.io/sdk";
 import { RenderBuilderContent } from "@/components/builder";
 
