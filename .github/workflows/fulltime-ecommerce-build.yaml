@@ -38,7 +38,7 @@ jobs:
           SITE_URL: ${{ inputs.site-url }}
         run: |
           npm ci
-          npm run build
+          next build && next export
 
 # Please do not touch the following action
       - name: Store deployment content
@@ -46,7 +46,7 @@ jobs:
         with:
           api-key: ${{ secrets.IONOS_API_KEY }}
           service-host: api-eu.ionos.space
-          project-id: e1600874-8ad6-4531-b7a3-d6875c844d44
+          project-id: 0988b2db-e4fa-46a7-a40c-4ddaa2b81c31
           branch-id: ${{ inputs.branch-id }}
           version: ${{ github.sha }}
           folder: ${{ env.DEPLOYMENT_FOLDER }}
