@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import { Source_Code_Pro } from 'next/font/google'
+import { Jost } from 'next/font/google'
 import './globals.css'
 
-const sourceCodePro = Source_Code_Pro({ subsets: ['latin'] })
+const jost = Jost({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'FULLTime eCommerce',
@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={sourceCodePro.className}>{children}</body>
+      <body className={jost.className}>{children}</body>
     </html>
   )
 }
