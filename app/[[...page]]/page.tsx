@@ -27,7 +27,7 @@ export default async function Page(props: PageProps) {
 
   return (
     <>
-      <RenderBuilderContent content={content} />
+      <RenderBuilderContent content={content} model={type} />
     </>
   );
 }
