@@ -13,7 +13,9 @@ interface PageProps {
 export default async function Page(props: PageProps) {
   let type = "page";
   if(props.params && props.params.page && props.params.page.length > 0) {
-    type = props.params.page[0];
+    if(props.params.page[0] === "symbol") {
+      type = props.params.page[0];
+    }
   }
 
   const content = await builder
@@ -24,7 +26,6 @@ export default async function Page(props: PageProps) {
       prerender: false,
     })
     .toPromise();
-
   return (
     <>
       <RenderBuilderContent content={content} model={type} />
